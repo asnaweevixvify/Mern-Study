@@ -8,3 +8,50 @@ body{
   padding: 0;
   display: block;
 }
+.nav-container ul{
+  display: flex;
+  width: 20vw;
+  height: 120px;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+.nav-container ul a{
+  color: white;
+}
+.nav-container ul li{
+  font-family: 'Kanit';
+  font-size: 25px;
+}
+.form-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  margin-top: 50px;
+}
+.form-container h1,h4{
+  font-family: 'Kanit';
+  font-weight: 500;
+}
+.form-container form input{
+  width: 400px;
+  height: 40px;
+  font-family: 'Kanit';
+}
+.form-container form{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.form-container form textarea{
+  height: 90px;
+  font-family: 'Kanit';
+}
+.form-container form button{
+  font-family: 'Kanit';
+  background-color:blueviolet;
+}

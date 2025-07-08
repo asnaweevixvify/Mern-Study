@@ -5,7 +5,7 @@ const mongoose = require("mongoose")
 const blogSchema = mongoose.Schema({
     title:{
         type:String,
-        required:true // ห้ามป้อนค่าว่าง
+        required:true //ห้ามป้อนค่าว่าง
     },
     content:{
         type:{},
@@ -18,9 +18,9 @@ const blogSchema = mongoose.Schema({
     slug:{
         type:String,
         lowercase:true, //ปรับเป็นตัวพิมพ์เล็ก
-        unique:true, //ห้ามตั้งชื่อซ้ำ
-        required:true
+        required:true,
+        unique:true //ห้ามตั้งชื่อซ้ำ
     }
-},{timestamps:true}) // เก็บวันเดือนปีที่เขียน
+},{timestamps:true}) //เก็บวันเดือนปีที่เขียน
 
 module.exports = mongoose.model("Blog",blogSchema)
