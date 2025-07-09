@@ -1,5 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
+import axios from 'axios'
+import Swal from 'sweetalert2'
 
 function Form() {
 
@@ -17,6 +19,23 @@ function Form() {
 
     function submitData(e){
         e.preventDefault()
+        //import.meta.env.VITE_APP_API = process.env.VITE_APP_API ใช้ในฝั่ง client
+        axios.post(`${import.meta.env.VITE_APP_API}/create`,{title,content,author})
+        .then((res)=>{
+            Swal.fire({
+                title: "บันทึกข้อมูลเรียบร้อย",
+                icon: "success",
+                draggable: true
+              })
+              setState({...state,title:'',content:'',author:''})
+        })
+        .catch((err)=>{
+            Swal.fire({
+                icon: "error",
+                title: "บันทึกข้อมูลไม่สำเร็จ",
+                text: err.response.data.error
+              });
+        })
     }
 
   return (
