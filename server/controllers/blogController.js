@@ -44,8 +44,19 @@ module.exports.singleBlog = (req,res)=>{
 
 // ลบข้อมูล
 module.exports.remove = (req,res)=>{
-    const slug = req.params
-    Blogs.findOneAndDelete(slug)
+    const {slug} = req.params
+    Blogs.findOneAndDelete({slug})
     .then((removeData)=>res.json("ลบบทความเรียบร้อยแล้ว"))
+    .catch(err=>res.status(400).json({error:err}))
+}
+
+// อัพเดทข้อมูล
+module.exports.update = (req,res)=>{
+    const {slug} = req.params
+
+    // ส่งข้อมูลใหม่เข้ามา
+    const {title,content,author} = req.body
+    Blogs.findOneAndUpdate({slug},{title,content,author},{new:true})
+    .then((updateData)=>res.json(updateData))
     .catch(err=>res.status(400).json({error:err}))
 }
