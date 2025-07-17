@@ -2,13 +2,14 @@ import React from 'react'
 import { useState } from 'react'
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import { getUser , getToken } from '../../services/authorize'
 
 function Form() {
 
     const [state,setState] = useState({
         title:'',
         content:'',
-        author:''
+        author:getUser()
     })
 
     const {title,content,author} = state
@@ -20,8 +21,13 @@ function Form() {
     function submitData(e){
         e.preventDefault()
         //import.meta.env.VITE_APP_API = process.env.VITE_APP_API ใช้ในฝั่ง client
-        axios.post(`${import.meta.env.VITE_APP_API}/create`,{title,content,author})
-        .then((res)=>{
+        axios.post(`${import.meta.env.VITE_APP_API}/create`,
+        {title,content,author},{
+            headers:{
+                authorization:`Bearer ${getToken()}`
+            }
+        })
+        .then(()=>{
             Swal.fire({
                 title: "บันทึกข้อมูลเรียบร้อย",
                 icon: "success",

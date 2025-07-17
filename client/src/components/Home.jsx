@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useState ,useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
+import { getUser,getToken } from '../../services/authorize'
 
 function Home() {
     const [data,setData] = useState([])
@@ -36,7 +37,11 @@ function Home() {
 
     function deleteBlog(slug){
         //ส่ง request ไปที่ api เพื่อลบข้อมูล
-        axios.delete(`${import.meta.env.VITE_APP_API}/blog/${slug}`)
+        axios.delete(`${import.meta.env.VITE_APP_API}/blog/${slug}`,{
+            headers:{
+                authorization:`Bearer ${getToken()}`
+            }
+        })
         .then((res)=>{
             Swal.fire({
                 title: res.data, //res.data => ลบบทความเรียบร้อยแล้ว
@@ -65,10 +70,11 @@ function Home() {
                             {e.author},เผยแพร่วันที่ {new Date(e.createdAt).toLocaleString()}
                         </div>
                         <hr></hr>
+                       {getUser() && 
                         <div className="btn-box">
                             <button className='btn-del' onClick={()=>confirmDelete(e.slug)}>ลบบทความ</button>
                             <Link to={`/blog/edit/${e.slug}`}><button className='btn-up'>แก้ไขบทความ</button></Link>
-                        </div>
+                        </div>}
                     </div>
                 )
             })}

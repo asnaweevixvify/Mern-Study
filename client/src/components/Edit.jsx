@@ -3,6 +3,7 @@ import { useState , useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import { getToken } from '../../services/authorize'
 
 function Edit() {
 
@@ -13,11 +14,6 @@ function Edit() {
     })
 
     const {title,content,author} = state
-
-    function inputValue(name){
-        return (e)=>{setState({...state,[name]:e.target.value})}
-    }
-
     const {slug} = useParams() 
 
     function fetchData(){
@@ -33,9 +29,17 @@ function Edit() {
         fetchData()
     },[])
 
+    function inputValue(name){
+        return (e)=>{setState({...state,[name]:e.target.value})}
+    }
+
     function submitData(e){
         e.preventDefault()
-        axios.put(`${import.meta.env.VITE_APP_API}/blog/${slug}`,{title,content,author})
+        axios.put(`${import.meta.env.VITE_APP_API}/blog/${slug}`,{title,content,author},{
+            headers:{
+                authorization:`Bearer ${getToken()}`
+            }
+        })
         .then((res)=>{
             Swal.fire({
                 title: "อัพเดทข้อมูลเรียบร้อย",
